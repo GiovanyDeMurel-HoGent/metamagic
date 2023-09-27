@@ -1,50 +1,57 @@
-const { PrismaClient } = require('@prisma/client')
 const axios = require('axios')
-const prisma = new PrismaClient()
+const { PrismaClient } = require('@prisma/client');
+const varina = require('./sample_decks/varina_lich_queen')
+const massacre = require('./sample_decks/massacre_girl')
+const atraxa = require('./sample_decks/atraxa_praetors_voice')
+const akroma = require('./sample_decks/akroma_angel_of_fury')
+
+const prisma = new PrismaClient({log: ['query', 'info', 'warn', 'error'],})
+
 
 const bulkOracleCardsURI = 'https://data.scryfall.io/oracle-cards/oracle-cards-20230926090140.json'
 
-async function getBulkOracleCards() {
-    try{
-    const bulkOracleCards = await axios.get(bulkOracleCardsURI)
-    return bulkOracleCards
-    } catch (error) {
-        console.error('Error downloading and storing Bulk oracle cards JSON data:', error.message)
-    }
-}
-
-const bulk_oracle_cards_JSON= await getBulkOracleCards()
-const varina = require('../sample_decks/varina_lich_queen')
-const massacre = require('../sample_decks/massacre_girl')
-const atraxa = require('../sample_decks/atraxa_praetors_voice')
-const akroma = require('../sample_decks/akroma_angel_of_fury')
 
 
 async function main() {
+  // let tx; // Declare tx variable here
 
-    await seedOracleCards(bulk_oracle_cards_JSON)
-
-    const sampleDecksData = [
-      varina, 
-      massacre, 
-      atraxa, 
-      akroma,
-    ]
-
-    const sampleDecksPromises = sampleDecksData.map(async (deck) =>{
-      return await buildSampleDeck(deck.deckdetails, deck.decklist)
-    })
+  try {
+    //const bulk_data = await getBulkOracleCards();
+    const sampleDecksData = [varina, massacre, atraxa, akroma]
+    const sampleDecksPromises = sampleDecksData.map(async (deck) => {
+      return buildSampleDeck(deck.deckdetails, deck.decklist)
+    });
     const sampleDecks = await Promise.all(sampleDecksPromises)
+    console.log(sampleDecks[0])
+    // console.log(sampleDecks[0])
+   //await seedOracleCards(bulk_data)
     await seedDecks(sampleDecks)
+
+  } catch (error) {
+    console.error(error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+async function getBulkOracleCards() {
+  try{
+  const response = await axios.get(bulkOracleCardsURI)
+  return response.data
+  } catch (error) {
+      console.error('Error downloading and storing Bulk oracle cards JSON data:', error.message)
+      throw error
+  }
 }
 
 async function seedOracleCards(jsonData) {
   try {
     const batchSize = 100;
-    const totalCards = jsonData.length
-    let insertedCards = 0
+    const totalCards = jsonData.length;
+    let insertedCards = 0;
+
     for (let i = 0; i < totalCards; i += batchSize) {
-      const batch = jsonData.slice(i, i + batchSize)
+      const batch = jsonData.slice(i, i + batchSize);
       await prisma.card.createMany({
         data: batch.map((card) => ({
           object: card.object,
@@ -108,62 +115,95 @@ async function seedOracleCards(jsonData) {
           prices: { json: card.prices },
           related_uris: { json: card.related_uris },
           purchase_uris: { json: card.purchase_uris },
+          
         })),
         skipDuplicates: true
-      }); 
-    const progress = ((i + batchSize) / totalCards) * 100;
-    insertedCards += batch.length
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
-    process.stdout.write(`Inserted: ${insertedCards} out of ${totalCards} cards. Progress: ${progress.toFixed(0)}%`);
+      })
+
+      const progress = ((i + batchSize) / totalCards) * 100;
+      insertedCards += batch.length;
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+      process.stdout.write(`Inserted: ${insertedCards} out of ${totalCards} cards. Progress: ${progress.toFixed(0)}%`);
     }
+
   } catch (error) {
-    console.error('Error seeding cards:', error);
-    
-  } finally {
-      await prisma.$disconnect();
+    throw error;
   }
 }
 
-async function seedDecks(decks) {
-  let insertedDecks = []
-  try{
-  const totalDecks = decks.length
-  for (let i = 0; i < totalDecks; i ++) {
-  const deck = decks[i]
-  await prisma.deck.create({
-    data: {
-      id: deck.id,
-      user_id: deck.user_id,
-      commander: deck.commander,
-      name: deck.name,
-      description: deck.description,
-      legal: deck.legal,
-      deckcards: {
-        create: deck.cards.map((card) => ({
-          card_id: card.card_id,
-          amount: card.amount,
-        })),
-      },
-    },
-  })
-    const progress = ((i + 1) / totalDecks) * 100;
-    insertedDecks.push({id: deck.id, user_id: deck.user_id, commander: deck.commander.name, name: deck.name})
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
-    process.stdout.write(`Inserted: ${i+1} out of ${totalDecks} decks. Progress: ${progress.toFixed(0)}%`);
-}
-} catch (error) {
-  console.error('Error seeding decks:', error);
-  
-} finally {
-      process.stdout.write(`\nSuccesfully seeded decks:\n`)
-      insertedDecks.forEach(deck => {
-      process.stdout.write(`id: ${deck.id} - commander: ${deck.commander}\n`)
+
+async function seedDecks(deckData) {
+  const deckPromises = deckData.map(async (deck) => {
+    // Check if the deck already exists in the database by its ID
+    const existingDeck = await prisma.deck.findUnique({
+      where: { id: deck.id },
     });
-    
-    await prisma.$disconnect();
-}
+
+    if (existingDeck) {
+      // Update the existing deck
+      const updatedDeck = await prisma.deck.update({
+        where: { id: deck.id },
+        data: {
+          // Update deck properties here as needed
+          name: deck.name,
+          description: deck.description,
+          legal: deck.legal,
+        },
+      });
+
+      // Delete all existing deck cards for this deck
+      await prisma.deckCard.deleteMany({
+        where: { deck_id: updatedDeck.id },
+      });
+
+      // Create new deck cards for the updated deck
+      const deckCardPromises = deck.cards.map((card) => {
+        return prisma.deckCard.create({
+          data: {
+            deck_id: updatedDeck.id,
+            card_id: card.card_id,
+            amount: card.amount,
+          },
+        });
+      });
+
+      await Promise.all(deckCardPromises);
+      
+      return updatedDeck;
+    } else {
+      // Create a new deck
+      const newDeck = await prisma.deck.create({
+        data: {
+          id: deck.id,
+          user_id: deck.user_id,
+          name: deck.name,
+          description: deck.description,
+          legal: deck.legal,
+        },
+      });
+
+      // Create deck cards for the new deck
+      const deckCardPromises = deck.cards.map((card) => {
+        return prisma.deckCard.create({
+          data: {
+            deck_id: newDeck.id,
+            card_id: card.card_id,
+            amount: card.amount,
+          },
+        });
+      });
+
+      await Promise.all(deckCardPromises);
+
+      return newDeck;
+    }
+  });
+
+  // Wait for all deck operations to complete
+  const createdOrUpdatedDecks = await Promise.all(deckPromises);
+
+  return createdOrUpdatedDecks;
 }
 
 async function parseDeckString(deckString, deckId) {
@@ -214,4 +254,3 @@ main()
     await prisma.$disconnect()
     process.exit(1)
   })
-

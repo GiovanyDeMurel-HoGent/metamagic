@@ -1,14 +1,4 @@
-const deckdetails = {
-    id: 'ab9d1537-f62b-43ce-9c2e-eb4e5da7248a',
-    user_id: 'e7faee9a-44a8-41df-8474-e6e42f06c9e6',
-    commander: commander,
-    name: "Red rage",
-    description: "Budet mono red beatdown.\n"
-      + "Stomp your foes on a budget!",
-    legal: true,
-  }
-  
-  const commander = {
+const commander = {
     "object": "card",
     "id": "8c21655e-fda4-4852-a801-c5593644044a",
     "oracle_id": "2b80faaf-92fd-4fa0-a3f6-8bb263e7ff1d",
@@ -146,80 +136,90 @@ const deckdetails = {
     }
   }
   
-  const decklist =
-  `1 Akroma, Angel of Fury
-  1 Arcane Signet
-  1 Blackblade Reforged
-  1 Blasphemous Act
-  1 Burnished Hart
-  1 Caged Sun
-  1 Cathartic Reunion
-  1 Chaos Warp
-  1 Claws of Valakut
-  1 Comet Storm
-  1 Commander's Sphere
-  1 Conjurer's Closet
-  1 Cursed Mirror
-  1 Dictate of the Twin Gods
-  1 Etali, Primal Storm
-  1 Everflowing Chalice
-  1 Faithless Looting
-  1 Fellwar Stone
-  1 Fire Diamond
-  1 Fireshrieker
-  1 Gauntlet of Power
-  1 Geode Golem
-  1 Gilded Lotus
-  1 Gratuitous Violence
-  1 Heart of Ramos
-  1 Hedron Archive
-  1 Hellkite Courser
-  1 Heraldic Banner
-  1 Horizon Stone
-  1 Hour of Devastation
-  1 Insult // Injury
-  1 Irencrag Feat
-  1 Kediss, Emberclaw Familiar
-  1 Koth of the Hammer
-  1 Leyline Tyrant
-  1 Liquimetal Torque
-  1 Magmaquake
-  1 Mana Geyser
-  1 Mask of Avacyn
-  1 Meteor Golem
-  1 Mind Stone
-  32 Mountain
-  1 Myriad Landscape
-  1 Ornithopter of Paradise
-  1 Prismatic Lens
-  1 Raking Claws
-  1 Reckless Impulse
-  1 Rogue's Passage
-  1 Scour from Existence
-  1 Seething Song
-  1 Seize the Spoils
-  1 Smoke
-  1 Sol Ring
-  1 Solemn Simulacrum
-  1 Soulbright Flamekin
-  1 Spinerock Knoll
-  1 Star Compass
-  1 Starstorm
-  1 Steel Hellkite
-  1 Swiftfoot Boots
-  1 Temple of the False God
-  1 Temur Battle Rage
-  1 Treasonous Ogre
-  1 Uncaged Fury
-  1 Unleash Fury
-  1 Vandalblast
-  1 Voyager Staff
-  1 Wayfarer's Bauble
-  1 Worn Powerstone`
+const decklist =
+`1 Akroma, Angel of Fury
+1 Arcane Signet
+1 Blackblade Reforged
+1 Blasphemous Act
+1 Burnished Hart
+1 Caged Sun
+1 Cathartic Reunion
+1 Chaos Warp
+1 Claws of Valakut
+1 Comet Storm
+1 Commander's Sphere
+1 Conjurer's Closet
+1 Cursed Mirror
+1 Dictate of the Twin Gods
+1 Etali, Primal Storm
+1 Everflowing Chalice
+1 Faithless Looting
+1 Fellwar Stone
+1 Fire Diamond
+1 Fireshrieker
+1 Gauntlet of Power
+1 Geode Golem
+1 Gilded Lotus
+1 Gratuitous Violence
+1 Heart of Ramos
+1 Hedron Archive
+1 Hellkite Courser
+1 Heraldic Banner
+1 Horizon Stone
+1 Hour of Devastation
+1 Insult // Injury
+1 Irencrag Feat
+1 Kediss, Emberclaw Familiar
+1 Koth of the Hammer
+1 Leyline Tyrant
+1 Liquimetal Torque
+1 Magmaquake
+1 Mana Geyser
+1 Mask of Avacyn
+1 Meteor Golem
+1 Mind Stone
+32 Mountain
+1 Myriad Landscape
+1 Ornithopter of Paradise
+1 Prismatic Lens
+1 Raking Claws
+1 Reckless Impulse
+1 Rogue's Passage
+1 Scour from Existence
+1 Seething Song
+1 Seize the Spoils
+1 Smoke
+1 Sol Ring
+1 Solemn Simulacrum
+1 Soulbright Flamekin
+1 Spinerock Knoll
+1 Star Compass
+1 Starstorm
+1 Steel Hellkite
+1 Swiftfoot Boots
+1 Temple of the False God
+1 Temur Battle Rage
+1 Treasonous Ogre
+1 Uncaged Fury
+1 Unleash Fury
+1 Vandalblast
+1 Voyager Staff
+1 Wayfarer's Bauble
+1 Worn Powerstone`
+
+const deckdetails = {
+  id: 'ab9d1537-f62b-43ce-9c2e-eb4e5da7248a',
+  user_id: 'e7faee9a-44a8-41df-8474-e6e42f06c9e6',
+  commander: commander,
+  name: "Red rage",
+  description: "Budet mono red beatdown.\n"
+    + "Stomp your foes on a budget!",
+  legal: true,
+}
   
   
   
-  const akroma = {deckdetails, decklist}
-  
-  module.exports = akroma
+const akroma = {deckdetails, decklist}
+
+module.exports = akroma
   

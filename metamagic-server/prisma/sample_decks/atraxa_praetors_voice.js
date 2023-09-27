@@ -1,14 +1,4 @@
-const deckdetails = {
-    id: 'e36f12dd-7cac-4a45-9fbf-9c1fd1c95862',
-    user_id: 'e7faee9a-44a8-41df-8474-e6e42f06c9e6',
-    commander: commander,
-    name: "Not your typical Atraxa",
-    description: "Poison your opponents and proliferate for the win\n"
-      + "Has a no artifacts and enchantments subtheme to make it less disgusting and to enable wiping the board with reckless abandon",
-    legal: true,
-  }
-  
-  const commander = {
+const commander = {
     "object": "card",
     "id": "d0d33d52-3d28-4635-b985-51e126289259",
     "oracle_id": "7e6b9b59-cd68-4e3c-827b-38833c92d6eb",
@@ -150,101 +140,111 @@ const deckdetails = {
       "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Atraxa%2C+Praetors%27+Voice&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
       "cardhoarder": "https://www.cardhoarder.com/cards/82414?affiliate_id=scryfall&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
     }
-  }
+}
   
-  const decklist =
-  `1 Atraxa, Praetors' Voice
-  1 Vraska, Betrayal's Sting
-  1 Planewide Celebration
-  1 Tainted Strike
-  1 Triumph of the Hordes
-  1 Bane of Progress
-  1 Biophagus
-  1 Birds of Paradise
-  1 Blighted Agent
-  1 Bloated Contaminator
-  1 Bloom Tender
-  1 Cankerbloom
-  1 Collector Ouphe
-  1 Elves of Deep Shadow
-  1 Endurance
-  1 Evolution Sage
-  1 Faeburrow Elder
-  1 Fathom Mage
-  1 Fertilid
-  1 Flux Channeler
-  1 Forgotten Ancient
-  1 Ichor Rats
-  1 Ixhel, Scion of Atraxa
-  1 Kataki, War's Wage
-  1 Master Biomancer
-  1 Noble Hierarch
-  1 Oracle of Mul Daya
-  1 Plague Stinger
-  1 Skithiryx, the Blight Dragon
-  1 Spike Weaver
-  1 Steelbane Hydra
-  1 Tekuthal, Inquiry Dominus
-  1 Tyrranax Rex
-  1 Venerated Rotpriest
-  1 Viridian Corrupter
-  1 Vorinclex, Monstrous Raider
-  1 Brokers Confluence
-  1 Fierce Guardianship
-  1 Reject Imperfection
-  1 Teferi's Protection
-  1 Infectious Bite
-  1 Rapid Hybridization
-  1 Swords to Plowshares
-  1 Culling Ritual
-  1 Farewell
-  1 Fracturing Gust
-  1 Gaze of Granite
-  1 Phyresis Outbreak
-  1 Vraska's Fall
-  1 Wave of Vitriol
-  1 Demonic Tutor
-  1 Experimental Augury
-  1 Infectious Inquiry
-  1 Mystical Tutor
-  1 Night's Whisper
-  1 Painful Truths
-  1 Prologue to Phyresis
-  1 Stinging Study
-  1 Tezzeret's Gambit
-  1 Vampiric Tutor
-  1 Worldly Tutor
-  1 Cultivate
-  1 Explore
-  1 Kodama's Reach
-  1 Nature's Lore
-  1 Skyshroud Claim
-  1 Three Visits
-  1 Bayou
-  1 Breeding Pool
-  1 City of Brass
-  1 Command Tower
-  10 Forest
-  1 Godless Shrine
-  1 Hallowed Fountain
-  1 Island
-  1 Mana Confluence
-  1 Overgrown Tomb
-  1 Plains
-  1 Savannah
-  1 Scrubland
-  4 Swamp
-  1 Temple Garden
-  1 Tropical Island
-  1 Tundra
-  1 Underground Sea
-  1 Urborg, Tomb of Yawgmoth
-  1 Watery Grave
-  1 Yavimaya, Cradle of Growth`
-  
-  
-  
-  const atraxa = {deckdetails, decklist}
-  
-  module.exports = atraxa
+const decklist =
+`1 Atraxa, Praetors' Voice
+1 Vraska, Betrayal's Sting
+1 Planewide Celebration
+1 Tainted Strike
+1 Triumph of the Hordes
+1 Bane of Progress
+1 Biophagus
+1 Birds of Paradise
+1 Blighted Agent
+1 Bloated Contaminator
+1 Bloom Tender
+1 Cankerbloom
+1 Collector Ouphe
+1 Elves of Deep Shadow
+1 Endurance
+1 Evolution Sage
+1 Faeburrow Elder
+1 Fathom Mage
+1 Fertilid
+1 Flux Channeler
+1 Forgotten Ancient
+1 Ichor Rats
+1 Ixhel, Scion of Atraxa
+1 Kataki, War's Wage
+1 Master Biomancer
+1 Noble Hierarch
+1 Oracle of Mul Daya
+1 Plague Stinger
+1 Skithiryx, the Blight Dragon
+1 Spike Weaver
+1 Steelbane Hydra
+1 Tekuthal, Inquiry Dominus
+1 Tyrranax Rex
+1 Venerated Rotpriest
+1 Viridian Corrupter
+1 Vorinclex, Monstrous Raider
+1 Brokers Confluence
+1 Fierce Guardianship
+1 Reject Imperfection
+1 Teferi's Protection
+1 Infectious Bite
+1 Rapid Hybridization
+1 Swords to Plowshares
+1 Culling Ritual
+1 Farewell
+1 Fracturing Gust
+1 Gaze of Granite
+1 Phyresis Outbreak
+1 Vraska's Fall
+1 Wave of Vitriol
+1 Demonic Tutor
+1 Experimental Augury
+1 Infectious Inquiry
+1 Mystical Tutor
+1 Night's Whisper
+1 Painful Truths
+1 Prologue to Phyresis
+1 Stinging Study
+1 Tezzeret's Gambit
+1 Vampiric Tutor
+1 Worldly Tutor
+1 Cultivate
+1 Explore
+1 Kodama's Reach
+1 Nature's Lore
+1 Skyshroud Claim
+1 Three Visits
+1 Bayou
+1 Breeding Pool
+1 City of Brass
+1 Command Tower
+10 Forest
+1 Godless Shrine
+1 Hallowed Fountain
+1 Island
+1 Mana Confluence
+1 Overgrown Tomb
+1 Plains
+1 Savannah
+1 Scrubland
+4 Swamp
+1 Temple Garden
+1 Tropical Island
+1 Tundra
+1 Underground Sea
+1 Urborg, Tomb of Yawgmoth
+1 Watery Grave
+1 Yavimaya, Cradle of Growth`
+
+const deckdetails = {
+  id: 'e36f12dd-7cac-4a45-9fbf-9c1fd1c95862',
+  user_id: 'e7faee9a-44a8-41df-8474-e6e42f06c9e6',
+  commander: commander,
+  name: "Not your typical Atraxa",
+  description: "Poison your opponents and proliferate for the win\n"
+    + "Has a no artifacts and enchantments subtheme to make it less disgusting and to enable wiping the board with reckless abandon",
+  legal: true,
+}
+
+
+
+const atraxa = {deckdetails, decklist}
+
+module.exports = atraxa
   

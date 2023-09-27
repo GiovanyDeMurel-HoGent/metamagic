@@ -1,14 +1,4 @@
-const deckdetails = {
-    id: '5ae6cd2a-9ca4-45dc-b7bb-cb5ab543ffbe',
-    user_id: 'e7faee9a-44a8-41df-8474-e6e42f06c9e6',
-    commander: commander,
-    name: "Ol' reliable Zombies",
-    description: "Field massive hordes of zombies while drawing a disgusting amount of cards.\n"
-      + "Contains the usual suspects of high powered staples but opts to leave out the most salt-inducing cards",
-    legal: true,
-  }
-  
-  const commander = {
+const commander = {
       object: 'card',
       id: 'f1caccc8-4f33-4ae3-a09a-b41b9c4663a1',
       oracle_id: '9859fbca-60c3-4a57-a377-51b56f03894f',
@@ -144,102 +134,112 @@ const deckdetails = {
       }
   }
   
-  const decklist =
-  `1 Varina, Lich Queen
-    1 Academy Ruins
-    1 Alhammarret's Archive
-    1 Anguished Unmaking
-    1 Arcane Signet
-    1 Archfiend of Ifnir
-    1 Binding Mummy
-    1 Burnished Hart
-    1 Carrion Feeder
-    1 Cavern of Souls
-    1 Cemetery Reaper
-    1 Champion of the Perished
-    1 Change of Plans
-    1 Changeling Outcast
-    1 City of Brass
-    1 Cleaver Skaab
-    1 Command Tower
-    1 Corpse Knight
-    1 Crucible of Worlds
-    1 Cryptbreaker
-    1 Cyclonic Rift
-    1 Demolition Field
-    1 Diregraf Colossus
-    1 Ebondeath, Dracolich
-    1 Farewell
-    1 Fierce Guardianship
-    1 Flooded Strand
-    1 Ghoulcaller Gisa
-    1 Godless Shrine
-    1 Gravecrawler
-    1 Gray Merchant of Asphodel
-    1 Hall of Heliod's Generosity
-    1 Hallowed Fountain
-    1 Havengul Lich
-    1 Island
-    1 Kindred Discovery
-    1 Lazotep Chancellor
-    1 Lightning Greaves
-    1 Living Death
-    1 Lord of the Undead
-    1 Mana Confluence
-    1 Mana Crypt
-    1 Marsh Flats
-    1 Master of Death
-    1 Morphic Pool
-    1 Mutavault
-    1 Myriad Landscape
-    1 Navigation Orb
-    1 Necroduality
-    1 Night's Whisper
-    1 Noosegraf Mob
-    1 Painful Truths
-    1 Paradoxical Outcome
-    1 Patriarch's Bidding
-    1 Phyrexian Delver
-    2 Plains
-    1 Polluted Delta
-    1 Raffine, Scheming Seer
-    1 Realmbreaker, the Invasion Tree
-    1 Relentless Dead
-    1 Reliquary Tower
-    1 Resurrection Orb
-    1 Rhystic Study
-    1 Rooftop Storm
-    1 Scrubland
-    1 Shadow of the Grave
-    1 Sheoldred, the Apocalypse
-    1 Skullclamp
-    1 Sol Ring
-    1 Surveyor's Scope
-    8 Swamp
-    1 Sword of the Animist
-    1 Syphon Mind
-    1 Talisman of Dominance
-    1 Talisman of Hierarchy
-    1 Teferi's Protection
-    1 The Scarab God
-    1 Thought Vessel
-    1 Thran Dynamo
-    1 Tundra
-    1 Undead Augur
-    1 Underground Sea
-    1 Vampiric Tutor
-    1 Vault of Champions
-    1 Volrath's Stronghold
-    1 Watery Grave
-    1 Wayfarer's Bauble
-    1 Wayward Servant
-    1 Whispering Madness
-    1 Windfall
-    1 Withered Wretch
-    1 Wonder`
+const decklist =
+`1 Varina, Lich Queen
+  1 Academy Ruins
+  1 Alhammarret's Archive
+  1 Anguished Unmaking
+  1 Arcane Signet
+  1 Archfiend of Ifnir
+  1 Binding Mummy
+  1 Burnished Hart
+  1 Carrion Feeder
+  1 Cavern of Souls
+  1 Cemetery Reaper
+  1 Champion of the Perished
+  1 Change of Plans
+  1 Changeling Outcast
+  1 City of Brass
+  1 Cleaver Skaab
+  1 Command Tower
+  1 Corpse Knight
+  1 Crucible of Worlds
+  1 Cryptbreaker
+  1 Cyclonic Rift
+  1 Demolition Field
+  1 Diregraf Colossus
+  1 Ebondeath, Dracolich
+  1 Farewell
+  1 Fierce Guardianship
+  1 Flooded Strand
+  1 Ghoulcaller Gisa
+  1 Godless Shrine
+  1 Gravecrawler
+  1 Gray Merchant of Asphodel
+  1 Hall of Heliod's Generosity
+  1 Hallowed Fountain
+  1 Havengul Lich
+  1 Island
+  1 Kindred Discovery
+  1 Lazotep Chancellor
+  1 Lightning Greaves
+  1 Living Death
+  1 Lord of the Undead
+  1 Mana Confluence
+  1 Mana Crypt
+  1 Marsh Flats
+  1 Master of Death
+  1 Morphic Pool
+  1 Mutavault
+  1 Myriad Landscape
+  1 Navigation Orb
+  1 Necroduality
+  1 Night's Whisper
+  1 Noosegraf Mob
+  1 Painful Truths
+  1 Paradoxical Outcome
+  1 Patriarch's Bidding
+  1 Phyrexian Delver
+  2 Plains
+  1 Polluted Delta
+  1 Raffine, Scheming Seer
+  1 Realmbreaker, the Invasion Tree
+  1 Relentless Dead
+  1 Reliquary Tower
+  1 Resurrection Orb
+  1 Rhystic Study
+  1 Rooftop Storm
+  1 Scrubland
+  1 Shadow of the Grave
+  1 Sheoldred, the Apocalypse
+  1 Skullclamp
+  1 Sol Ring
+  1 Surveyor's Scope
+  8 Swamp
+  1 Sword of the Animist
+  1 Syphon Mind
+  1 Talisman of Dominance
+  1 Talisman of Hierarchy
+  1 Teferi's Protection
+  1 The Scarab God
+  1 Thought Vessel
+  1 Thran Dynamo
+  1 Tundra
+  1 Undead Augur
+  1 Underground Sea
+  1 Vampiric Tutor
+  1 Vault of Champions
+  1 Volrath's Stronghold
+  1 Watery Grave
+  1 Wayfarer's Bauble
+  1 Wayward Servant
+  1 Whispering Madness
+  1 Windfall
+  1 Withered Wretch
+  1 Wonder`
+
+const deckdetails = {
+  id: '5ae6cd2a-9ca4-45dc-b7bb-cb5ab543ffbe',
+  user_id: 'e7faee9a-44a8-41df-8474-e6e42f06c9e6',
+  commander: commander,
+  name: "Ol' reliable Zombies",
+  description: "Field massive hordes of zombies while drawing a disgusting amount of cards.\n"
+    + "Contains the usual suspects of high powered staples but opts to leave out the most salt-inducing cards",
+  legal: true,
+}
   
   
-  const varina = {deckdetails, decklist}
-  
-  module.exports = varina
+const varina = {deckdetails, decklist}
+
+module.exports = varina
   
