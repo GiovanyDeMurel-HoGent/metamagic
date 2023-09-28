@@ -1,10 +1,12 @@
+import { DecksList } from "./features/decks/DecksList"
+
 
 
 
 function App() {
 
   return (
-    <h1>Hello World</h1>
+    <DecksList />
   )
 }
 
