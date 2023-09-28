@@ -1,7 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-// Controller function to get all decks
+
+
 async function getAllDecks(req, res) {
   try {
     const decks = await prisma.deck.findMany();
@@ -50,25 +51,41 @@ async function getDeckById(req, res) {
     }
   }
 
-// Controller function to get all cards for a specific deck by deck_id
-async function getCardsForDeck(deck_id) {
-  try {
-    const cardsForDeck = await prisma.card.findMany({
-      where: {
-        deckcards: {
-          every: {
-            deck_id: deck_id,
+  async function getCardsForDeck(deck_id) {
+    try {
+      const deckCards = await prisma.deckCard.findMany({
+        where: {
+          deck_id: deck_id,
+        },
+      });
+  
+      const cardIdsWithAmount = deckCards.map((deckCard) => ({
+        id: deckCard.card_id,
+        amount: deckCard.amount,
+      }));
+  
+      const cardsForDeck = await prisma.card.findMany({
+        where: {
+          id: {
+            in: cardIdsWithAmount.map((card) => card.id),
           },
         },
-      },
-    });
-
-    return cardsForDeck;
-  } catch (error) {
-    console.error(error);
-    throw new Error('Error fetching cards for the deck.');
+      });
+  
+      const cardsWithAmount = cardsForDeck.map((card) => {
+        const matchingCard = cardIdsWithAmount.find((c) => c.id === card.id);
+        return {
+          ...card,
+          amount: matchingCard ? matchingCard.amount : 0,
+        };
+      });
+  
+      return cardsWithAmount;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error fetching cards for the deck.');
+    }
   }
-}
 
 module.exports = {
   getAllDecks,

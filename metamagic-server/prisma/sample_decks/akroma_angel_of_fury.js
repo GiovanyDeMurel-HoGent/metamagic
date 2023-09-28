@@ -212,7 +212,7 @@ const deckdetails = {
   user_id: 'e7faee9a-44a8-41df-8474-e6e42f06c9e6',
   commander: commander,
   name: "Red rage",
-  description: "Budet mono red beatdown.\n"
+  description: "Budget mono red beatdown.\n"
     + "Stomp your foes on a budget!",
   legal: true,
 }

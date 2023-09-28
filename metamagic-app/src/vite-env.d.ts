@@ -75,6 +75,7 @@ declare module 'metamagic-types' {
         prices: Record<string, unknown> | null;
         related_uris: Record<string, unknown> | null;
         purchase_uris: Record<string, unknown> | null; 
+        amount?: number;
     }
 
     interface DeckCard {
