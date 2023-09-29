@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
+const swagger = require('./swagger-config');
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -9,6 +10,8 @@ const corsOptions = {
   origin: ['http://localhost:5173', 'http://127.0.0.1:5173']
 };
 app.use(cors(corsOptions))
+
+app.use('/api-docs', swagger.serveSwaggerUI, swagger.setupSwaggerUI);
 
 const deckRoutes = require('./routes/deckRoutes');
 

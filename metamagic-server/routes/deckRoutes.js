@@ -4,6 +4,22 @@ const deckController = require('../controllers/deckController');
 
 const { getAllDecks, getDeckById, getCardsForDeck, getDecksByUserId } = deckController;
 
+/**
+ * @swagger
+ * /api/decks:
+ *   get:
+ *     summary: Get all decks.
+ *     description: Retrieve a list of all decks.
+ *     responses:
+ *       200:
+ *         description: A list of decks.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Deck'
+ */
 router.get('/api/decks', getAllDecks);
 
 router.get('/api/decks/:deck_id', getDeckById);
