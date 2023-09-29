@@ -12,6 +12,7 @@
     "seed": "node prisma/seed.js"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "fresh": "sh -c \"yarn install && npx prisma generate && npx prisma db push && npx prisma db seed && nodemon server.js\""
   }
 }

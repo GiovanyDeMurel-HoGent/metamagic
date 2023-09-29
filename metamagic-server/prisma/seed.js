@@ -5,26 +5,22 @@ const massacre = require('./sample_decks/massacre_girl')
 const atraxa = require('./sample_decks/atraxa_praetors_voice')
 const akroma = require('./sample_decks/akroma_angel_of_fury')
 
-const prisma = new PrismaClient({log: ['query', 'info', 'warn', 'error'],})
-
+const prisma = new PrismaClient();
 
 const bulkOracleCardsURI = 'https://data.scryfall.io/oracle-cards/oracle-cards-20230926090140.json'
 
 
 
 async function main() {
-  // let tx; // Declare tx variable here
 
   try {
-    //const bulk_data = await getBulkOracleCards();
+    const bulk_data = await getBulkOracleCards();
     const sampleDecksData = [varina, massacre, atraxa, akroma]
     const sampleDecksPromises = sampleDecksData.map(async (deck) => {
       return buildSampleDeck(deck.deckdetails, deck.decklist)
     });
     const sampleDecks = await Promise.all(sampleDecksPromises)
-    console.log(sampleDecks[0])
-    // console.log(sampleDecks[0])
-   //await seedOracleCards(bulk_data)
+    await seedOracleCards(bulk_data)
     await seedDecks(sampleDecks)
 
   } catch (error) {
@@ -134,99 +130,99 @@ async function seedOracleCards(jsonData) {
 
 
 async function seedDecks(deckData) {
-  const deckPromises = deckData.map(async (deck) => {
-    // Check if the deck already exists in the database by its ID
-    const existingDeck = await prisma.deck.findUnique({
-      where: { id: deck.id },
+  try {
+    const deckPromises = deckData.map(async (deck) => {
+      const existingDeck = await prisma.deck.findUnique({
+        where: { id: deck.id },
+      });
+
+      if (existingDeck) {
+        const updatedDeck = await prisma.deck.update({
+          where: { id: deck.id },
+          data: {
+            name: deck.name,
+            description: deck.description,
+            legal: deck.legal,
+          },
+        });
+
+        await prisma.deckCard.deleteMany({
+          where: { deck_id: updatedDeck.id },
+        });
+
+        const deckCardPromises = deck.cards.map((card) => {
+          return prisma.deckCard.create({
+            data: {
+              deck_id: updatedDeck.id,
+              card_id: card.card_id,
+              amount: card.amount,
+            },
+          });
+        });
+
+        await Promise.all(deckCardPromises);
+        
+        return updatedDeck;
+      } else {
+        const newDeck = await prisma.deck.create({
+          data: {
+            id: deck.id,
+            user_id: deck.user_id,
+            name: deck.name,
+            description: deck.description,
+            legal: deck.legal,
+          },
+        });
+
+        const deckCardPromises = deck.cards.map((card) => {
+          return prisma.deckCard.create({
+            data: {
+              deck_id: newDeck.id,
+              card_id: card.card_id,
+              amount: card.amount,
+            },
+          });
+        });
+
+        await Promise.all(deckCardPromises);
+
+        return newDeck;
+      }
     });
 
-    if (existingDeck) {
-      // Update the existing deck
-      const updatedDeck = await prisma.deck.update({
-        where: { id: deck.id },
-        data: {
-          // Update deck properties here as needed
-          name: deck.name,
-          description: deck.description,
-          legal: deck.legal,
-        },
-      });
+    const createdOrUpdatedDecks = await Promise.all(deckPromises);
 
-      // Delete all existing deck cards for this deck
-      await prisma.deckCard.deleteMany({
-        where: { deck_id: updatedDeck.id },
-      });
-
-      // Create new deck cards for the updated deck
-      const deckCardPromises = deck.cards.map((card) => {
-        return prisma.deckCard.create({
-          data: {
-            deck_id: updatedDeck.id,
-            card_id: card.card_id,
-            amount: card.amount,
-          },
-        });
-      });
-
-      await Promise.all(deckCardPromises);
-      
-      return updatedDeck;
-    } else {
-      // Create a new deck
-      const newDeck = await prisma.deck.create({
-        data: {
-          id: deck.id,
-          user_id: deck.user_id,
-          name: deck.name,
-          description: deck.description,
-          legal: deck.legal,
-        },
-      });
-
-      // Create deck cards for the new deck
-      const deckCardPromises = deck.cards.map((card) => {
-        return prisma.deckCard.create({
-          data: {
-            deck_id: newDeck.id,
-            card_id: card.card_id,
-            amount: card.amount,
-          },
-        });
-      });
-
-      await Promise.all(deckCardPromises);
-
-      return newDeck;
-    }
-  });
-
-  // Wait for all deck operations to complete
-  const createdOrUpdatedDecks = await Promise.all(deckPromises);
-
-  return createdOrUpdatedDecks;
+    return createdOrUpdatedDecks;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function parseDeckString(deckString, deckId) {
-  const lines = deckString.split('\n');
-  const deckObjects = [];
+  try {
+    const lines = deckString.split('\n');
+    const deckObjects = [];
 
-  for (const line of lines) {
-    const parts = line.trim().split(/\s+/);
+    for (const line of lines) {
+      const parts = line.trim().split(/\s+/);
 
-    if (parts.length >= 2) {
-      const amount = parseInt(parts[0], 10);
-      const name = parts.slice(1).join(' ');
+      if (parts.length >= 2) {
+        const amount = parseInt(parts[0], 10);
+        const name = parts.slice(1).join(' ');
 
-      const card = await getCardIdByName(name)
+        const card = await getCardIdByName(name);
 
-      if (card && card.id) {
-        deckObjects.push({ deck_id: deckId, card_id: card.id, amount });
-      } else {
-        console.log(`Card not found for: ${name}`);
+        if (card && card.id) {
+          deckObjects.push({ deck_id: deckId, card_id: card.id, amount });
+        } else {
+          console.log(`Card not found for: ${name}`);
+        }
       }
     }
+    return deckObjects;
+  } catch (error) {
+    throw error;
   }
-  return deckObjects;
 }
 
 async function getCardIdByName(cardName) {
