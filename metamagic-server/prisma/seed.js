@@ -115,12 +115,19 @@ async function seedOracleCards(jsonData) {
         })),
         skipDuplicates: true
       })
-
+      //   Reset: \x1b[0m (Resets text color to the default)
+      //   Red: \x1b[31m
+      //   Green: \x1b[32m
+      //   Yellow: \x1b[33m
+      //   Blue: \x1b[34m
+      //   Magenta: \x1b[35m
+      //   Cyan: \x1b[36m
+      //   White: \x1b[37m
       const progress = ((i + batchSize) / totalCards) * 100;
       insertedCards += batch.length;
       process.stdout.clearLine();
       process.stdout.cursorTo(0);
-      process.stdout.write(`Inserted: ${insertedCards} out of ${totalCards} cards. Progress: ${progress.toFixed(0)}%`);
+      process.stdout.write(`Inserted: \x1b[32m${insertedCards}\x1b[0m out of \x1b[33m${totalCards}\x1b[0m cards. Progress: \x1b[36m${progress.toFixed(0)}%\x1b[0m`);
     }
 
   } catch (error) {

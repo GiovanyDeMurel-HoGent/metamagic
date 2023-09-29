@@ -2,13 +2,12 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 
-// Define the "Deck" schema based on your Prisma schema
 const deckSchema = {
     type: 'object',
     properties: {
       id: { type: 'string' },
       user_id: { type: 'string' },
-      commander: { type: 'object' }, // Update the properties as needed
+      commander: { type: 'object' },
       name: { type: 'string' },
       description: { type: 'string' },
       created_at: { type: 'string', format: 'date-time' },
@@ -122,7 +121,7 @@ const swaggerOptions = {
         },
       },
     },
-    apis: ['./routes/*.js'], // Specify the path to your route files
+    apis: ['./routes/*.js'],
   };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
