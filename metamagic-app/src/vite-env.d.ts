@@ -4,7 +4,7 @@ declare module 'metamagic-types' {
     export interface Deck {
         id: string;
         user_id: string;
-        commander: Record<string> | null
+        commander: Record<json> | null
         name: string;
         description: string | null;
         created_at: Date | null;
@@ -30,21 +30,21 @@ declare module 'metamagic-types' {
         layout: string | null;
         highres_image: boolean | null;
         image_status: string | null;
-        image_uris: Record<string, string> | null;
+        image_uris: Record<json> | null;
         mana_cost: string | null;
         cmc: number | null;
         type_line: string | null;
         oracle_text: string | null;
         colors: string[] | null;
         color_identity: string[] | null;
-        card_faces: Record<string, unknown> | null;
+        card_faces: Record<json> | null;
         keywords: string[] | null;
-        legalities: Record<string, unknown> | null;
+        legalities: Record<json, unknown> | null;
         games: string[] | null;
         reserved: boolean | null;
         foil: boolean | null;
         nonfoil: boolean | null;
-        finishes: Record<string, unknown> | null;
+        finishes: Record<json, unknown> | null;
         oversized: boolean | null;
         promo: boolean | null;
         reprint: boolean | null;
@@ -56,14 +56,14 @@ declare module 'metamagic-types' {
         set_search_uri: string | null;
         scryfall_set_uri: string | null;
         rulings_uri: string | null;
-        prints_search_uri: Record<string, string> | null;
+        prints_search_uri: Record<json> | null;
         collector_number: string | null;
         digital: boolean | null;
         rarity: string | null;
         flavor_text: string | null;
         card_back_id: string | null;
         artist: string | null;
-        artist_ids: Record<string, unknown> | null;
+        artist_ids: Record<json, unknown> | null;
         illustration_id: string | null;
         border_color: string | null;
         frame: string | null;
@@ -72,9 +72,9 @@ declare module 'metamagic-types' {
         booster: boolean | null;
         story_spotlight: boolean | null;
         edhrec_rank: number | null;
-        prices: Record<string, unknown> | null;
-        related_uris: Record<string, unknown> | null;
-        purchase_uris: Record<string, unknown> | null; 
+        prices: Record<json, unknown> | null;
+        related_uris: Record<json, unknown> | null;
+        purchase_uris: Record<json, unknown> | null; 
         amount?: number;
     }
 

@@ -5,7 +5,7 @@ import { Deck } from "metamagic-types"
 
 
 export function DecksList() {
-    const [decks, setDecks] = useState(Array<Deck>)
+    const [decks, setDecks] = useState<Deck[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
