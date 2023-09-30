@@ -32,13 +32,19 @@ export default function CardsList({
               setSelectedCard(card);
             }}
           >
-            <span style={{width:"33ch", display:"inline-block", margin:"auto 20px"}}>{card.name}</span>
+            <span >{card.name}</span>
+            </a>
+            <span >{card.id == commanderId && <span>[C]</span>}</span>
+            <span >{card.mana_cost}</span>
+            <span>({card.cmc})</span>
+            {/* <span style={{width:"33ch", display:"inline-block", margin:"auto 20px"}}>{card.name}</span>
+            </a>
             <span style={{width:"20px", display:"inline-block"}}>{card.id == commanderId && <span>[C]</span>}</span>
             <span style={{width:"20ch", display:"inline-block", textAlign:"end"}}>({card.mana_cost})</span>
-            <span>({card.cmc})</span>
-          </a>
+            <span>({card.cmc})</span> */}
+          
 
-          <button onClick={() => onRemoveCard(card.id)}>remove</button>
+          <button onClick={() => onRemoveCard(card.id)}>x</button>
         </li>
       ))}
     </ul>
