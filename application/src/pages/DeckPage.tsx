@@ -44,6 +44,7 @@ export default function DeckPage() {
   const handleRemoveCard = (cardToRemoveId: string) => {
     const updatedCards = cards.filter((card) => card.id !== cardToRemoveId);
     setCards(updatedCards);
+    setSelectedCard(undefined)
   };
 
   function handleIncrementAmount(
