@@ -2,6 +2,7 @@ import { Card } from "metamagic-types";
 
 interface CardsListProps {
   cards: Card[];
+  commanderId: string;
   setSelectedCard: (card: Card) => void;
   onRemoveCard: (cardToRemoveId: string) => void;
   onDecrementAmount: (cardToDecrementId: string, amount?: number) => void;
@@ -9,6 +10,7 @@ interface CardsListProps {
 }
 export default function CardsList({
   cards,
+  commanderId,
   setSelectedCard,
   onRemoveCard,
   onDecrementAmount,
@@ -23,7 +25,8 @@ export default function CardsList({
               setSelectedCard(card);
             }}
           >
-            {card.name} {card.amount}
+            {card.name} {card.amount}{" "}
+            {card.id == commanderId && <span>commander</span>}
           </a>
           <button onClick={() => onDecrementAmount(card.id, card.amount)}>
             +
@@ -31,6 +34,7 @@ export default function CardsList({
           <button onClick={() => onIncrementAmount(card.id, card.amount)}>
             -
           </button>
+
           <button onClick={() => onRemoveCard(card.id)}>remove</button>
         </li>
       ))}

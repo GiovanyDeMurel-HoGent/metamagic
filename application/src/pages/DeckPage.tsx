@@ -93,6 +93,7 @@ export default function DeckPage() {
           {selectedCard && <CardImage {...selectedCard} />}
           <CardsList
             cards={cards}
+            commanderId={deck.commander.id}
             setSelectedCard={setSelectedCard}
             onRemoveCard={handleRemoveCard}
             onDecrementAmount={handleIncrementAmount}
