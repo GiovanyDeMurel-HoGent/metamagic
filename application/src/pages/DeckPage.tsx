@@ -28,7 +28,6 @@ export default function DeckPage() {
       const cardsResponse = await axios.get(
         `http://localhost:3000/api/decks/${id}/cards`
       );
-      console.log(cardsResponse.data);
       setCards(cardsResponse.data);
 
       setLoading(false);
