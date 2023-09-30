@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Deck {
+  id          String     @id @db.Uuid
+  user_id     String     @db.Uuid
+  commander   Json?
+  name        String     @db.VarChar(255)
+  description String?
+  created_at  DateTime?  @default(now()) @db.Timestamp(6)
+  updated_at  DateTime?  @default(now()) @updatedAt @db.Timestamp(6)
+  legal       Boolean    @default(false)
+  deckcard    DeckCard[]
+
+  @@map("decks")
+}
+
+model DeckCard {
+  deck_id String @db.Uuid
+  card_id String @db.Uuid
+  amount  Int
+  deck    Deck   @relation(fields: [deck_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  card     Card   @relation(fields: [card_id], references: [id])
+
+  @@id([deck_id, card_id])
+  @@map("deckcards")
+}
+
+model Card {
+  object            String
+  id                String    @id @db.Uuid
+  oracle_id         String?   @db.Uuid
+  multiverse_ids    Json?     @db.Json
+  mtgo_id           Int?
+  mtgo_foil_id      Int?
+  tcgplayer_id      Int?
+  cardmarket_id     Int?
+  name              String?   @db.VarChar(255)
+  lang              String?   @db.VarChar(5)
+  released_at       DateTime? @db.Date
+  uri               String?
+  scryfall_uri      String?
+  layout            String?   @db.VarChar(50)
+  highres_image     Boolean?
+  image_status      String?   @db.VarChar(50)
+  image_uris        Json?     @db.Json
+  mana_cost         String?   @db.VarChar(255)
+  cmc               Decimal?  @db.Decimal
+  type_line         String?   @db.VarChar(255)
+  oracle_text       String?
+  colors            Json?     @db.Json
+  color_identity    Json?     @db.Json
+  card_faces        Json?     @db.Json
+  keywords          Json?     @db.Json
+  legalities        Json?     @db.Json
+  games             Json?     @db.Json
+  reserved          Boolean?
+  foil              Boolean?
+  nonfoil           Boolean?
+  finishes          Json?     @db.Json
+  oversized         Boolean?
+  promo             Boolean?
+  reprint           Boolean?
+  variation         Boolean?
+  set_id            String?   @db.Uuid
+  set_name          String?   @db.VarChar(255)
+  set_type          String?   @db.VarChar(255)
+  set_uri           String?
+  set_search_uri    String?
+  scryfall_set_uri  String?
+  rulings_uri       String?
+  prints_search_uri Json?     @db.Json
+  collector_number  String?   @db.VarChar(255)
+  digital           Boolean?
+  rarity            String?   @db.VarChar(50)
+  flavor_text       String?
+  card_back_id      String?   @db.Uuid
+  artist            String?   @db.VarChar(255)
+  artist_ids        Json?     @db.Json
+  illustration_id   String?   @db.Uuid
+  border_color      String?   @db.VarChar(50)
+  frame             String?   @db.VarChar(50)
+  full_art          Boolean?
+  textless          Boolean?
+  booster           Boolean?
+  story_spotlight   Boolean?
+  edhrec_rank       Int?
+  prices            Json?     @db.Json
+  related_uris      Json?     @db.Json
+  purchase_uris     Json?     @db.Json
+
+  deckcard DeckCard[]
+
+  @@map("cards")
+}
