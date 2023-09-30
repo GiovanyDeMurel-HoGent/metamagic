@@ -36,6 +36,12 @@ export default function DeckPage() {
     if (loading) getDeckData()
   }, [getDeckData, loading])
 
+  const handleRemoveCard = (cardToRemoveId:string) => {
+    // Filter out the card to be removed from the cards array
+    const updatedCards = cards.filter((card) => card.id !== cardToRemoveId);
+    setCards(updatedCards);
+  };
+
   return (
     <>
       {!loading && (
@@ -45,7 +51,7 @@ export default function DeckPage() {
           <p>Commander Name: {deck.commander.name}</p>
           <p>Commander Color Identity: {deck.commander.color_identity}</p>
           {selectedCard && <CardImage {...selectedCard} />}
-          <CardsList cards={cards} setSelectedCard={setSelectedCard} />
+          <CardsList cards={cards} setSelectedCard={setSelectedCard} onRemoveCard={handleRemoveCard} />
         </div>
       )}
     </>
