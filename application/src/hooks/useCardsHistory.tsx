@@ -18,7 +18,6 @@ export function useCardsHistory(
   const undo = () => {
     if (undoStack.current.length > 0) {
       const prevCardsHistory = undoStack.current.pop();
-      console.log(prevCardsHistory);
       redoStack.current.push([...cards]);
       setCards([...(prevCardsHistory ?? [])]);
     }
