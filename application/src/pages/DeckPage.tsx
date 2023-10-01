@@ -5,14 +5,19 @@ import CardImage from "../features/cards/CardImage";
 import useCardsUpdate from "../hooks/useCardsUpdate";
 import useInitialiseDeckPage from "../hooks/useInitialiseDeckPage";
 import { useCardsHistory } from "../hooks/useCardsHistory";
+import CardSearch from "../features/cards/CardSearch";
 
-//TODO: set selectedCard to undefined when resetting + undo/reset when appropriate
 export default function DeckPage() {
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const [selectedSearchCard, setSelectedSearchCard] = useState<Card | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
 
-  const { cards, deck, setCards, initialCards } = 
-  useInitialiseDeckPage(loading, setLoading);
+  const { cards, deck, setCards, initialCards } = useInitialiseDeckPage(
+    loading,
+    setLoading
+  );
 
   const { undoStack, redoStack, undo, redo, reset, saveCardsToHistory } =
     useCardsHistory(cards, setCards, initialCards);
@@ -25,14 +30,12 @@ export default function DeckPage() {
     saveCardsToHistory
   );
 
-  console.log("rendering");
-
-
-
   return (
     <>
       {!loading && (
         <div>
+          <CardSearch setSelectedSearchCard={setSelectedSearchCard} />
+          {selectedSearchCard && <CardImage {...selectedSearchCard} />}
           <h2>{deck.name}</h2>
           {deck.description && <p>Description: {deck.description}</p>}
           <p>Commander Name: {deck.commander.name}</p>
