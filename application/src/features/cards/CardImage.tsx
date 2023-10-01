@@ -2,7 +2,7 @@ import { Card } from "metamagic-types";
 import { useEffect, useRef, useState } from "react";
 
 export default function CardImage(card: Card) {
-  const [isReversible, setIsReversible] = useState<boolean>();
+  const [isReversible, setIsReversible] = useState(card.layout === "transform");
   const [displayedCard, setDisplayedCard] = useState<Card | null>();
   const [isFrontFace, setIsFrontFace] = useState(true);
   const frontFace = useRef<Card>();
@@ -13,13 +13,11 @@ export default function CardImage(card: Card) {
     : displayedCard?.image_uris?.normal;
 
   useEffect(() => {
-    const isReversible =
-      card.card_faces && typeof card.layout?.includes("transform");
     if (!isReversible) {
       setDisplayedCard(card);
       setIsReversible(false);
     } else {
-      if (card.card_faces && typeof card.layout?.includes("transform")) {
+      if (isReversible) {
         const front = {
           ...card,
           artist: card.card_faces[0].artist,
@@ -30,7 +28,7 @@ export default function CardImage(card: Card) {
           oracle_text: card.card_faces[0].oracle_text,
           power: card.card_faces[0].power,
           toughness: card.card_faces[0].toughness,
-          type_line: card.type_line,
+          type_line: card.card_faces[0].type_line,
           image_uris: card.card_faces[0].image_uris,
         };
         const back = {
@@ -43,7 +41,7 @@ export default function CardImage(card: Card) {
           oracle_text: card.card_faces[1].oracle_text,
           power: card.card_faces[1].power,
           toughness: card.card_faces[1].toughness,
-          type_line: card.type_line,
+          type_line: card.card_faces[0].type_line,
           image_uris: card.card_faces[1].image_uris,
         };
         frontFace.current = front;
@@ -70,7 +68,7 @@ export default function CardImage(card: Card) {
       <img
         src={image_uri}
         alt={card.name as string}
-        style={{ width: "280px", height: "auto", margin: "auto" }}
+        style={{ width: "100px", height: "auto", margin: "auto" }}
       />
       {isReversible && <button onClick={handleReverse}>flip</button>}
     </>
