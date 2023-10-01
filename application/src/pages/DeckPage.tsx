@@ -6,6 +6,7 @@ import useCardsUpdate from "../hooks/useCardsUpdate";
 import useInitialiseDeckPage from "../hooks/useInitialiseDeckPage";
 import { useCardsHistory } from "../hooks/useCardsHistory";
 import CardSearch from "../features/cards/CardSearch";
+import axios from "axios";
 
 export default function DeckPage() {
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
@@ -30,6 +31,23 @@ export default function DeckPage() {
       setSelectedCard,
       saveCardsToHistory
     );
+
+    const handleUpdate = async () => {
+      
+      
+      try {
+        const updatedDeck = {...deck, cards}
+        console.log("Request Payload:", { ...deck, cards });
+        const result = await axios.put(
+          `http://localhost:3000/api/decks/${deck.id}`,
+          updatedDeck
+        );
+        console.log("Response Status:", result.status);
+        console.log("Response Data:", result.data);
+      } catch (error) {
+        console.error("Request Error:", error);
+      }
+    };
 
   return (
     <>
@@ -77,6 +95,7 @@ export default function DeckPage() {
           />
         </div>
       )}
+      <button onClick={handleUpdate}>UPDATE</button>
     </>
   );
 }

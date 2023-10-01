@@ -11,6 +11,9 @@ export default function useCardsUpdate(
     try {
       if (cardToAdd && !cards.find((card) => card.id === cardToAdd.id)) {
         const updatedCards = [...cards, { ...cardToAdd, amount: 1 }];
+        console.log(`Card ${cardToAdd ? cardToAdd.name : ""} added:\n`)
+        console.log(updatedCards[updatedCards.length-2])
+        console.log(updatedCards[updatedCards.length-1])
         setCards(updatedCards);
         saveCardsToHistory(updatedCards);
       } else {

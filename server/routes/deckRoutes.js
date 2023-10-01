@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const deckController = require('../controllers/deckController');
+const { axios } = require('axios');
 
-const { getAllDecks, getDeckById, getCardsForDeck, getDecksByUserId } = deckController;
+const { getAllDecks, getDeckById, getCardsForDeck, getDecksByUserId, updateDeck } = deckController;
 
 /**
  * @swagger
@@ -118,6 +119,18 @@ router.get('/api/decks/:deck_id/cards', async (req, res) => {
   try {
     const cardsForDeck = await getCardsForDeck(deck_id);
     res.json(cardsForDeck);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.put("/api/decks/:deck_id", async (req, res) => {
+  const { deck_id } = req.params;
+  const deck  = req.body; // Destructure the 'deck' property from req.body
+  try {
+    await updateDeck(deck, deck_id); // Pass 'deck' and 'deck_id' to your updateDeck function
+    res.status(200).json({ message: 'Deck updated successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
