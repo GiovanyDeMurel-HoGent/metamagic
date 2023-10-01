@@ -22,7 +22,7 @@ export default function DeckPage() {
   const { undoStack, redoStack, undo, redo, reset, saveCardsToHistory } =
     useCardsHistory(cards, setCards, initialCards);
 
-  const { incrementAmount, decrementAmount, removeCard } = useCardsUpdate(
+  const { incrementAmount, decrementAmount, addCard, removeCard } = useCardsUpdate(
     cards,
     setCards,
     selectedCard,
@@ -34,7 +34,7 @@ export default function DeckPage() {
     <>
       {!loading && (
         <div>
-          <CardSearch setSelectedSearchCard={setSelectedSearchCard} />
+          <CardSearch cards={cards} selectedSearchCard={selectedSearchCard} setSelectedSearchCard={setSelectedSearchCard} addCard={addCard} />
           {selectedSearchCard && <CardImage {...selectedSearchCard} />}
           <h2>{deck.name}</h2>
           {deck.description && <p>Description: {deck.description}</p>}
