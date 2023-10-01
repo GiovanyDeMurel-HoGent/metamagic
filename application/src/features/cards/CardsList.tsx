@@ -17,7 +17,7 @@ export default function CardsList({
   onIncrementAmount,
 }: CardsListProps) {
   return (
-    <ul>
+    <ul style={{ listStyle: "none", padding: "0" }}>
       {cards.map((card) => (
         <li key={card.id}>
           <span> {card.amount} </span>
@@ -32,7 +32,7 @@ export default function CardsList({
           </a>
           <span>{card.id == commanderId && <span>[C]</span>}</span>
           <span>{card.mana_cost}</span>
-          <span>({card.cmc})</span>
+          {/* <span>({card.cmc})</span> */}
           {/* <span style={{width:"33ch", display:"inline-block", margin:"auto 20px"}}>{card.name}</span>
             </a>
             <span style={{width:"20px", display:"inline-block"}}>{card.id == commanderId && <span>[C]</span>}</span>

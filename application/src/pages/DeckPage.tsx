@@ -22,19 +22,25 @@ export default function DeckPage() {
   const { undoStack, redoStack, undo, redo, reset, saveCardsToHistory } =
     useCardsHistory(cards, setCards, initialCards);
 
-  const { incrementAmount, decrementAmount, addCard, removeCard } = useCardsUpdate(
-    cards,
-    setCards,
-    selectedCard,
-    setSelectedCard,
-    saveCardsToHistory
-  );
+  const { incrementAmount, decrementAmount, addCard, removeCard } =
+    useCardsUpdate(
+      cards,
+      setCards,
+      selectedCard,
+      setSelectedCard,
+      saveCardsToHistory
+    );
 
   return (
     <>
       {!loading && (
         <div>
-          <CardSearch cards={cards} selectedSearchCard={selectedSearchCard} setSelectedSearchCard={setSelectedSearchCard} addCard={addCard} />
+          <CardSearch
+            cards={cards}
+            selectedSearchCard={selectedSearchCard}
+            setSelectedSearchCard={setSelectedSearchCard}
+            addCard={addCard}
+          />
           {selectedSearchCard && <CardImage {...selectedSearchCard} />}
           <h2>{deck.name}</h2>
           {deck.description && <p>Description: {deck.description}</p>}
@@ -47,7 +53,18 @@ export default function DeckPage() {
           <button onClick={redo} disabled={redoStack.current.length === 0}>
             Redo
           </button>
-          <button onClick={reset} disabled={false}>
+          <button
+            onClick={reset}
+            disabled={
+              cards.length === initialCards.length &&
+              !cards.some((card, index) => {
+                return (
+                  card.id !== initialCards[index].id ||
+                  card.amount !== initialCards[index].amount
+                );
+              })
+            }
+          >
             Reset
           </button>
           <CardsList

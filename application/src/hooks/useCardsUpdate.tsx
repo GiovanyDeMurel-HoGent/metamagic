@@ -7,21 +7,21 @@ export default function useCardsUpdate(
   setSelectedCard: (card: Card | null) => void,
   saveCardsToHistory: (cards: Array<Card>) => void
 ) {
-
   const addCard = (cardToAdd: Card | null) => {
-    try{
-    if (cardToAdd && !cards.find((card)=> card.id === cardToAdd.id)){
-        const updatedCards = [...cards, cardToAdd];
+    try {
+      if (cardToAdd && !cards.find((card) => card.id === cardToAdd.id)) {
+        const updatedCards = [...cards, { ...cardToAdd, amount: 1 }];
         setCards(updatedCards);
         saveCardsToHistory(updatedCards);
-    }
-    else {
-        throw new Error(`Card ${cardToAdd ? cardToAdd.name : ""} already exists in deck`)
-    }
+      } else {
+        throw new Error(
+          `Card ${cardToAdd ? cardToAdd.name : ""} already exists in deck`
+        );
+      }
     } catch (error) {
-        console.error(error)
+      console.error(error);
     }
-  }   
+  };
 
   const removeCard = (cardToRemoveId: string) => {
     const updatedCards = cards.filter((card) => card.id !== cardToRemoveId);
