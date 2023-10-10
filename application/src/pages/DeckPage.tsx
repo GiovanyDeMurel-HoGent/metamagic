@@ -8,12 +8,14 @@ import { useCardsHistory } from "../hooks/useCardsHistory";
 import CardSearch from "../features/cards/CardSearch";
 import axios from "axios";
 import { DeckContext } from "../features/decks/context/DeckContext";
+import CardDetails from "../features/cards/CardDetails";
+import { Card } from "metamagic-types";
 //TODO context ? context aanspreken vanuit custom hooks
 export default function DeckPage() {
   // const [selectedCard, setSelectedCard] = useState<Card | null>(null);
   // const [selectedSearchCard, setSelectedSearchCard] = useState<Card | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const [displayCardDetails, setDisplayCardDetails] = useState<Card|null>(null)
   const {cards, deck, selectedCard, setSelectedCard,selectedSearchCard, setSelectedSearchCard} = useContext(DeckContext)!
   
 
@@ -51,12 +53,15 @@ export default function DeckPage() {
             setSelectedSearchCard={setSelectedSearchCard}
             addCard={addCard}
           />
-          {selectedSearchCard && <CardImage {...selectedSearchCard} />}
+          {selectedSearchCard && <CardImage card={selectedSearchCard} displayCardDetails={displayCardDetails} setDisplayCardDetails={setDisplayCardDetails} />}
           <h2>{deck?.name}</h2>
           {deck?.description && <p>Description: {deck.description}</p>}
           <p>Commander Name: {deck?.commander.name}</p>
           <p>Commander Color Identity: {deck?.commander.color_identity}</p>
-          {selectedCard && <CardImage {...selectedCard} />}
+          {selectedCard && <CardImage card={selectedCard} displayCardDetails={displayCardDetails} setDisplayCardDetails={setDisplayCardDetails} />}
+          {displayCardDetails!==null && 
+          <CardDetails card={displayCardDetails}/>
+          }
           <button onClick={undo} disabled={undoStack.current.length === 0}>
             Undo
           </button>

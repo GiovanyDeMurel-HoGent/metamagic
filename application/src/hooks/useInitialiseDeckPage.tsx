@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Deck, Card } from 'metamagic-types';
+import { Card } from 'metamagic-types';
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { useParams, useLocation } from 'react-router-dom';
 import { DeckContext } from '../features/decks/context/DeckContext';
@@ -29,12 +29,12 @@ export default function useInitialiseCards(loading:boolean, setLoading:(bool:boo
           `http://localhost:3000/api/decks/${id}/cards`
         );
         setCards(cardsResponse.data);
-        if (initialCards.length === 0) setInitialCards(cardsResponse.data);
+        if (initialCards?.length === 0) setInitialCards(cardsResponse.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    }, [id, initialCards.length, location.state, setCards, setLoading]);
+    }, [id, initialCards?.length, location.state, setCards, setDeck, setLoading]);
   
     useEffect(() => {
       if (loading) getDeckData();
