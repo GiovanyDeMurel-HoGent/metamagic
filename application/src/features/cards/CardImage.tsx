@@ -10,7 +10,7 @@ export default function CardImage(card: Card) {
         <img
           src={image_uri}
           alt={card.name as string}
-          style={{ width: "100px", height: "auto" }}
+          style={{ width: "200px", height: "auto" }}
         />
       </div>
       {isReversible && <button onClick={handleReverse}>flip</button>}

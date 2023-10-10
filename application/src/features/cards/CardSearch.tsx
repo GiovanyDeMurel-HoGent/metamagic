@@ -2,7 +2,7 @@ import { Card } from "metamagic-types";
 import useCardSearch from "../../hooks/useCardSearch";
 
 interface CardSearchProps {
-  cards: Array<Card>;
+  cards: Array<Card> | null;
   selectedSearchCard: Card | null;
   setSelectedSearchCard: (card: Card | null) => void;
   addCard: (card: Card | null) => void;
@@ -36,7 +36,7 @@ export default function CardSearch({
           value={searchValue}
         />
 
-        <ul>
+        <ul style={{listStyle:"none"}}>
           {searchValue.trim().length > 1 &&
             suggestions.map((suggestion) => (
               <li
@@ -52,7 +52,7 @@ export default function CardSearch({
         <button
           onClick={() => addCard(selectedSearchCard)}
           disabled={
-            cards.find((card) => selectedSearchCard.id === card.id)
+            cards?.find((card) => selectedSearchCard.id === card.id)
               ? true
               : false
           }

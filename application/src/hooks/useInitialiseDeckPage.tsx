@@ -1,14 +1,17 @@
 import axios from 'axios';
 import { Deck, Card } from 'metamagic-types';
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { useParams, useLocation } from 'react-router-dom';
+import { DeckContext } from '../features/decks/context/DeckContext';
 
 export default function useInitialiseCards(loading:boolean, setLoading:(bool:boolean)=>void) {
     const { id } = useParams();
     const location = useLocation();
     const [deck, setDeck] = useState<Deck>({} as Deck);
-    const [cards, setCards] = useState<Array<Card>>([]);
+    // const [cards, setCards] = useState<Array<Card>>([]);
+    const {cards, setCards} = useContext(DeckContext)!
     const [initialCards, setInitialCards] = useState<Array<Card>>([]);
+
 
     //set deck with uselocation.state if navigating via react-router Link
     //fetch deck first if navigating via entering urlin browser

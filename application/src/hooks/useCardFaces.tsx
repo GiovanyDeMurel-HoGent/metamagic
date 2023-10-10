@@ -43,7 +43,7 @@ export default function useCardFaces(card:Card) {
           oracle_text: card.card_faces[1].oracle_text,
           power: card.card_faces[1].power,
           toughness: card.card_faces[1].toughness,
-          type_line: card.card_faces[0].type_line,
+          type_line: card.card_faces[1].type_line,
           image_uris: card.card_faces[1].image_uris,
         };
         frontFace.current = front;

@@ -1,24 +1,28 @@
 import { Card } from "metamagic-types";
+import { useContext } from "react";
+import { DeckContext } from "../decks/context/DeckContext";
 
 interface CardsListProps {
-  cards: Card[];
+  cards: Card[] | null;
   commanderId: string;
   setSelectedCard: (card: Card) => void;
   onRemoveCard: (cardToRemoveId: string) => void;
   onDecrementAmount: (cardToDecrementId: string, amount?: number) => void;
   onIncrementAmount: (cardToIncrementId: string, amount?: number) => void;
 }
+
 export default function CardsList({
-  cards,
+  // cards,
   commanderId,
-  setSelectedCard,
+  // setSelectedCard,
   onRemoveCard,
   onDecrementAmount,
   onIncrementAmount,
 }: CardsListProps) {
+  const {cards,setSelectedCard} = useContext(DeckContext)!
   return (
     <ul style={{ listStyle: "none", padding: "0" }}>
-      {cards.map((card) => (
+      {cards?.map((card) => (
         <li key={card.id}>
           <span> {card.amount} </span>
           <button onClick={() => onDecrementAmount(card.id)}>+</button>
