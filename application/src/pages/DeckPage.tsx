@@ -28,37 +28,24 @@ export default function DeckPage() {
   const { incrementAmount, decrementAmount, addCard, removeCard } =
     useCardsUpdate(saveCardsToHistory);
 
-
     function compareCards(a, b) {
-      // Compare alphabetically by name
       const nameComparison = a.name.localeCompare(b.name);
       if (nameComparison !== 0) {
         return nameComparison;
       }
     
-      // Compare by cmc
       if (a.cmc !== b.cmc) {
         return a.cmc - b.cmc;
       }
     
-      // Compare mana_cost
-      function getIntegerValue(manaCost) {
-        // Extract the integer value from "{integer}" string or return Infinity for "{character}" strings
-        const integerMatch = manaCost.match(/\{(\d+)\}/);
-        return integerMatch ? parseInt(integerMatch[1], 10) : Infinity;
+      function compareManaCost(aManaCost, bManaCost) {
+        // Remove curly braces and compare the strings directly
+        return aManaCost.replace(/\{|\}/g, '').localeCompare(bManaCost.replace(/\{|\}/g, ''));
       }
     
-      const integerA = a.mana_cost.map(getIntegerValue);
-      const integerB = b.mana_cost.map(getIntegerValue);
-    
-      for (let i = 0; i < integerA.length; i++) {
-        if (integerA[i] !== integerB[i]) {
-          return integerA[i] - integerB[i];
-        }
-      }
-    
-      return 0;
+      return compareManaCost(a.mana_cost, b.mana_cost);
     }
+
 
     const handleSort = () => {
       if(cards){
