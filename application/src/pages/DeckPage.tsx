@@ -16,7 +16,7 @@ export default function DeckPage() {
   // const [selectedSearchCard, setSelectedSearchCard] = useState<Card | null>(null);
   const [loading, setLoading] = useState(true);
   const [displayCardDetails, setDisplayCardDetails] = useState<Card|null>(null)
-  const {cards, deck, selectedCard, setSelectedCard,selectedSearchCard, setSelectedSearchCard} = useContext(DeckContext)!
+  const {cards, deck, selectedCard,setCards, setSelectedCard,selectedSearchCard, setSelectedSearchCard} = useContext(DeckContext)!
   
 
   const { initialCards } = 
@@ -27,6 +27,46 @@ export default function DeckPage() {
 
   const { incrementAmount, decrementAmount, addCard, removeCard } =
     useCardsUpdate(saveCardsToHistory);
+
+
+    function compareCards(a, b) {
+      // Compare alphabetically by name
+      const nameComparison = a.name.localeCompare(b.name);
+      if (nameComparison !== 0) {
+        return nameComparison;
+      }
+    
+      // Compare by cmc
+      if (a.cmc !== b.cmc) {
+        return a.cmc - b.cmc;
+      }
+    
+      // Compare mana_cost
+      function getIntegerValue(manaCost) {
+        // Extract the integer value from "{integer}" string or return Infinity for "{character}" strings
+        const integerMatch = manaCost.match(/\{(\d+)\}/);
+        return integerMatch ? parseInt(integerMatch[1], 10) : Infinity;
+      }
+    
+      const integerA = a.mana_cost.map(getIntegerValue);
+      const integerB = b.mana_cost.map(getIntegerValue);
+    
+      for (let i = 0; i < integerA.length; i++) {
+        if (integerA[i] !== integerB[i]) {
+          return integerA[i] - integerB[i];
+        }
+      }
+    
+      return 0;
+    }
+
+    const handleSort = () => {
+      if(cards){
+      const sortedCards = cards
+      sortedCards?.sort(compareCards)
+      setCards([...sortedCards])
+      }
+    }
 
   const handleUpdate = async () => { 
     try {
@@ -82,6 +122,7 @@ export default function DeckPage() {
           >
             Reset
           </button>
+          <button onClick={handleSort}>sort</button>
           <CardsList
             cards={cards}
             commanderId={deck?.commander.id}
