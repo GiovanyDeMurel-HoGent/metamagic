@@ -7,9 +7,9 @@ import { DeckContext } from '../features/decks/context/DeckContext';
 export default function useInitialiseCards(loading:boolean, setLoading:(bool:boolean)=>void) {
     const { id } = useParams();
     const location = useLocation();
-    const [deck, setDeck] = useState<Deck>({} as Deck);
+    // const [deck, setDeck] = useState<Deck>({} as Deck);
     // const [cards, setCards] = useState<Array<Card>>([]);
-    const {cards, setCards} = useContext(DeckContext)!
+    const {cards, setCards, deck, setDeck} = useContext(DeckContext)!
     const [initialCards, setInitialCards] = useState<Array<Card>>([]);
 
 
@@ -34,7 +34,7 @@ export default function useInitialiseCards(loading:boolean, setLoading:(bool:boo
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    }, [id, initialCards.length, location.state, setLoading]);
+    }, [id, initialCards.length, location.state, setCards, setLoading]);
   
     useEffect(() => {
       if (loading) getDeckData();
