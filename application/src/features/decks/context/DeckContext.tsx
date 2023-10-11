@@ -20,6 +20,8 @@ type DeckContextType = {
   setSelectedSearchCard: (card: Card | null) => void;
   displayCardDetails: Card | null;
   setDisplayCardDetails: (card: Card | null) => void;
+  expandedCardId: string|null
+  setExpandedCardId: (arg:string|null)=>void
 };
 
 export const DeckContext = createContext<DeckContextType | null>(null);
@@ -36,6 +38,7 @@ export const DeckProvider = ({ children }: { children: React.ReactNode }) => {
   const [displayCardDetails, setDisplayCardDetails] = useState<Card | null>(
     null
   );
+  const [expandedCardId, setExpandedCardId] = useState<string|null>(null)
   const [undoStack, setUndoStack] = useState<Card[][]>([]);
   const [redoStack, setRedoStack] = useState<Card[][]>([]);
 
@@ -58,6 +61,7 @@ export const DeckProvider = ({ children }: { children: React.ReactNode }) => {
         setSelectedSearchCard,
         displayCardDetails,
         setDisplayCardDetails,
+        expandedCardId, setExpandedCardId
       }}
     >
       {children}
