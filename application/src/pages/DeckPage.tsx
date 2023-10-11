@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react";
 import CardsList from "../features/cards/CardsList";
 import CardImage from "../features/cards/CardImage";
 import useCardsUpdate from "../hooks/useCardsUpdate";
-import { useCardsHistory } from "../hooks/useCardsHistory";
 import CardSearch from "../features/cards/CardSearch";
 import axios from "axios";
 import { DeckContext } from "../features/decks/context/DeckContext";
@@ -10,11 +9,11 @@ import CardDetails from "../features/cards/CardDetails";
 
 import { useCardsSort } from "../hooks/useCardsSort";
 import useInitialiseCards from "../hooks/useInitialiseDeckPage";
+import CardsHistory from "../features/cards/CardsHistory";
 
 export default function DeckPage() {
   const {
     loading,
-    initialCards,
     cards,
     deck,
     selectedCard,
@@ -25,23 +24,20 @@ export default function DeckPage() {
     setDisplayCardDetails,
   } = useContext(DeckContext)!;
 
-  // TODO: separate sort, history, update into own react functional components
-
-  
 
   const { sortCards } = useCardsSort();
 
-  const { undoStack, redoStack, undo, redo, reset } = useCardsHistory();
 
   const { incrementAmount, decrementAmount, addCard, removeCard } =
     useCardsUpdate();
   
-  const {getDeckData} = useInitialiseCards()
+  const {initialiseDeckPage} = useInitialiseCards()
 
   useEffect(() => {
-    getDeckData()
-  }, [])
-  
+    initialiseDeckPage()
+  }, [initialiseDeckPage])
+
+  console.log(cards)
 
   const handleSort = () => {
     sortCards();
@@ -93,30 +89,10 @@ export default function DeckPage() {
           {displayCardDetails !== null && (
             <CardDetails card={displayCardDetails} />
           )}
-          <button onClick={undo} disabled={undoStack.current.length === 0}>
-            Undo
-          </button>
-          <button onClick={redo} disabled={redoStack.current.length === 0}>
-            Redo
-          </button>
-          <button
-            onClick={reset}
-            disabled={
-              cards?.length === initialCards?.length &&
-              !cards?.some((card, index) => {
-                if (initialCards)
-                  return (
-                    card.id !== initialCards[index].id ||
-                    card.amount !== initialCards[index].amount
-                  );
-              })
-            }
-          >
-            Reset
-          </button>
+          <CardsHistory/>
           <button onClick={handleSort}>sort</button>
           <CardsList
-            cards={cards}
+            // cards={cards}
             commanderId={deck?.commander.id}
             setSelectedCard={setSelectedCard}
             onRemoveCard={removeCard}

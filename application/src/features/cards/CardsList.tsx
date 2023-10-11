@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { DeckContext } from "../decks/context/DeckContext";
 
 interface CardsListProps {
-  cards: Card[] | null;
+  // cards: Card[] | null;
   commanderId: string;
   setSelectedCard: (card: Card) => void;
   onRemoveCard: (cardToRemoveId: string) => void;

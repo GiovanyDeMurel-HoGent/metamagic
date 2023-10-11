@@ -4,10 +4,6 @@ import { DeckContext } from "../features/decks/context/DeckContext";
 import { useCardsHistory } from "./useCardsHistory";
 
 export default function useCardsUpdate(
-  // cards: Array<Card>,
-  // setCards: (cards: Array<Card>) => void,
-  // selectedCard: Card | null,
-  // setSelectedCard: (card: Card | null) => void,
 ) {
   const {saveCardsToHistory} = useCardsHistory()
   const {cards, setCards, selectedCard, setSelectedCard,} = useContext(DeckContext)!
@@ -18,10 +14,11 @@ export default function useCardsUpdate(
         const updatedCards = cards && [...cards, { ...cardToAdd, amount: 1 }];
         if (updatedCards){
         console.log(`Card ${cardToAdd ? cardToAdd.name : ""} added:\n`)
-        console.log(updatedCards[updatedCards.length-2])
-        console.log(updatedCards[updatedCards.length-1])
-        setCards(updatedCards);
-        saveCardsToHistory(updatedCards);
+        // console.log(updatedCards[updatedCards.length-2])
+        // console.log(updatedCards[updatedCards.length-1])
+        saveCardsToHistory([...cards]);
+        setCards([...updatedCards]);
+        
         }
       } else {
         throw new Error(
@@ -45,16 +42,20 @@ export default function useCardsUpdate(
   };
 
   const incrementAmount = (cardToDecrementId: string) => {
+    if (cards){
     const updatedCards = cards?.map((card) => {
       if (card.id === cardToDecrementId && card.amount) {
         const updatedAmount = card.amount + 1;
+        console.log(card)
         return { ...card, amount: updatedAmount };
       }
       return card;
     });
-    if (updatedCards){
-    setCards(updatedCards);
-    saveCardsToHistory(updatedCards);
+    
+    console.log("incrementing...")
+    saveCardsToHistory([...cards ?? []]);
+    setCards([...updatedCards]);
+    
     }
   };
 
@@ -76,8 +77,8 @@ export default function useCardsUpdate(
         return card;
       })
       .filter((card) => card.amount !== 0);
+    saveCardsToHistory([...cards]);
     setCards(updatedCards);
-    saveCardsToHistory(updatedCards);
     }
   };
   return {

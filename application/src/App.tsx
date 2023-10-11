@@ -10,15 +10,16 @@ import { DeckProvider } from "./features/decks/context/DeckContext";
 function App() {
 
   return (
+
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/decks" element={<DecksPage/>}/>
 
         <Route path="/decks/:id" element={
-          <DeckProvider>
+              <DeckProvider>
             <DeckPage/>
-          </DeckProvider>
+            </DeckProvider>
         //   <DeckContext.Provider
         //   value={{
         //     deck,

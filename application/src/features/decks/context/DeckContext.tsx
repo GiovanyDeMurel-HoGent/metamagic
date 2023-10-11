@@ -2,6 +2,10 @@ import { Card, Deck } from "metamagic-types";
 import { createContext, useState } from "react";
 
 type DeckContextType = {
+  undoStack: Card[][]
+  redoStack: Card[][]
+  setUndoStack:(arg:Card[][])=>void
+  setRedoStack:(arg:Card[][])=>void
   loading: boolean;
   setLoading: (arg: boolean) => void;
   deck: Deck | null;
@@ -32,10 +36,14 @@ export const DeckProvider = ({ children }: { children: React.ReactNode }) => {
   const [displayCardDetails, setDisplayCardDetails] = useState<Card | null>(
     null
   );
+  const [undoStack, setUndoStack] = useState<Card[][]>([]);
+  const [redoStack, setRedoStack] = useState<Card[][]>([]);
+
 
   return (
     <DeckContext.Provider
       value={{
+        undoStack, redoStack, setUndoStack, setRedoStack,
         loading,
         setLoading,
         deck,
