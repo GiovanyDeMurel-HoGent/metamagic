@@ -1,18 +1,19 @@
 import axios from 'axios';
-import { useCallback, useContext, useEffect} from 'react'
+import { useCallback, useContext} from 'react'
 import { useParams, useLocation } from 'react-router-dom';
 import { DeckContext } from '../features/decks/context/DeckContext';
 
 export default function useInitialiseCards() {
     const { id } = useParams();
     const location = useLocation();
-    const {loading, setLoading, cards, initialCards, setInitialCards, setCards, deck, setDeck} = useContext(DeckContext)!
+    const {loading, setLoading, setInitialCards, setCards, setDeck} = useContext(DeckContext)!
 
 
 
     //set deck with uselocation.state if navigating via react-router Link
     //fetch deck first if navigating via entering urlin browser
     const getDeckData = useCallback(async () => {
+      if(loading){
       try {
         if (location.state) {
           setDeck(location.state);
@@ -26,18 +27,19 @@ export default function useInitialiseCards() {
           `http://localhost:3000/api/decks/${id}/cards`
         );
         setCards(cardsResponse.data);
-        if (initialCards?.length === 0) setInitialCards(cardsResponse.data);
+        setInitialCards(cardsResponse.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    }, [id, initialCards?.length, location.state, setCards, setDeck, setInitialCards, setLoading]);
+    }
+    }, [id, loading, location.state, setCards, setDeck, setInitialCards, setLoading]);
   
-    useEffect(() => {
-      if (loading) getDeckData();
-    }, [getDeckData, loading]);
+    // useEffect(() => {
+    //   if (loading) getDeckData();
+    // }, []);
   
   return {
-    deck, cards, setCards, setDeck, initialCards
+    getDeckData
   }
 }

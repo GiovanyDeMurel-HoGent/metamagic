@@ -32,7 +32,7 @@ export function useCardsHistory() {
   };
 
   const reset = () => {
-    setCards([...(initialCards ?? [])]);
+    setCards([...initialCards ?? []]);
     undoStack.current = [];
     redoStack.current = [];
   };

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import CardsList from "../features/cards/CardsList";
 import CardImage from "../features/cards/CardImage";
 import useCardsUpdate from "../hooks/useCardsUpdate";
@@ -9,6 +9,8 @@ import { DeckContext } from "../features/decks/context/DeckContext";
 import CardDetails from "../features/cards/CardDetails";
 
 import { useCardsSort } from "../hooks/useCardsSort";
+import useInitialiseCards from "../hooks/useInitialiseDeckPage";
+
 export default function DeckPage() {
   const {
     loading,
@@ -25,12 +27,21 @@ export default function DeckPage() {
 
   // TODO: separate sort, history, update into own react functional components
 
+  
+
   const { sortCards } = useCardsSort();
 
   const { undoStack, redoStack, undo, redo, reset } = useCardsHistory();
 
   const { incrementAmount, decrementAmount, addCard, removeCard } =
     useCardsUpdate();
+  
+  const {getDeckData} = useInitialiseCards()
+
+  useEffect(() => {
+    getDeckData()
+  }, [])
+  
 
   const handleSort = () => {
     sortCards();
