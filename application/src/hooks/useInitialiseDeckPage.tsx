@@ -1,16 +1,13 @@
 import axios from 'axios';
-import { Card } from 'metamagic-types';
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect} from 'react'
 import { useParams, useLocation } from 'react-router-dom';
 import { DeckContext } from '../features/decks/context/DeckContext';
 
-export default function useInitialiseCards(loading:boolean, setLoading:(bool:boolean)=>void) {
+export default function useInitialiseCards() {
     const { id } = useParams();
     const location = useLocation();
-    // const [deck, setDeck] = useState<Deck>({} as Deck);
-    // const [cards, setCards] = useState<Array<Card>>([]);
-    const {cards, setCards, deck, setDeck} = useContext(DeckContext)!
-    const [initialCards, setInitialCards] = useState<Array<Card>>([]);
+    const {loading, setLoading, cards, initialCards, setInitialCards, setCards, deck, setDeck} = useContext(DeckContext)!
+
 
 
     //set deck with uselocation.state if navigating via react-router Link
@@ -34,7 +31,7 @@ export default function useInitialiseCards(loading:boolean, setLoading:(bool:boo
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    }, [id, initialCards?.length, location.state, setCards, setDeck, setLoading]);
+    }, [id, initialCards?.length, location.state, setCards, setDeck, setInitialCards, setLoading]);
   
     useEffect(() => {
       if (loading) getDeckData();

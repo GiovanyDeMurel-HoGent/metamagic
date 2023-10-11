@@ -1,14 +1,15 @@
 import { Card } from "metamagic-types";
 import { useContext } from "react";
 import { DeckContext } from "../features/decks/context/DeckContext";
+import { useCardsHistory } from "./useCardsHistory";
 
 export default function useCardsUpdate(
   // cards: Array<Card>,
   // setCards: (cards: Array<Card>) => void,
   // selectedCard: Card | null,
   // setSelectedCard: (card: Card | null) => void,
-  saveCardsToHistory: (cards: Array<Card>) => void
 ) {
+  const {saveCardsToHistory} = useCardsHistory()
   const {cards, setCards, selectedCard, setSelectedCard,} = useContext(DeckContext)!
   const addCard = (cardToAdd: Card | null) => {
     try {
