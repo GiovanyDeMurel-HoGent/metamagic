@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Deck } from "metamagic-types"
-import { DeckBox } from "./DeckBox";
+import { DeckPreview } from "./DeckPreview";
 
 
 export function DecksList() {
@@ -24,7 +24,7 @@ export function DecksList() {
       <p>Loading...</p>
     :
       decks.map((deck) => (
-        <DeckBox key={deck.id} {...deck}/>
+        <DeckPreview key={deck.id} {...deck}/>
       )) 
 
     }

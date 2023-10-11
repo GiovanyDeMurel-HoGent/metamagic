@@ -1,7 +1,7 @@
 import { Deck } from "metamagic-types";
 import { Link } from "react-router-dom";
 
-export function DeckBox(deck: Deck) {
+export function DeckPreview(deck: Deck) {
   return (
     <div>
       <h2>{deck.name}</h2>
