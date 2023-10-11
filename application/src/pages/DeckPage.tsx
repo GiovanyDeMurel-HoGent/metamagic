@@ -28,6 +28,7 @@ export default function DeckPage() {
   const { incrementAmount, decrementAmount, addCard, removeCard } =
     useCardsUpdate(saveCardsToHistory);
 
+    // TODO: split off into util and typing
     function compareCards(a, b) {
       const nameComparison = a.name.localeCompare(b.name);
       if (nameComparison !== 0) {

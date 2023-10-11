@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const { mapCards } = require("../util/cardsMapper");
 const prisma = new PrismaClient();
 
 async function getAllDecks(req, res) {
@@ -49,36 +50,69 @@ async function getDecksByUserId(req, res) {
   }
 }
 
+// async function getCardsForDeck(deck_id) {
+//   try {
+//     const deckCards = await prisma.deckCard.findMany({
+//       where: {
+//         deck_id: deck_id,
+//       },
+//     });
+
+//     const cardIdsWithAmount = deckCards.map((deckCard) => ({
+//       id: deckCard.card_id,
+//       amount: deckCard.amount,
+//     }));
+
+//     const cardsForDeck = await prisma.card.findMany({
+//       where: {
+//         id: {
+//           in: cardIdsWithAmount.map((card) => card.id),
+//         },
+//       },
+//     });
+
+//     const cardsWithAmount = cardsForDeck.map((card) => {
+//       const matchingCard = cardIdsWithAmount.find((c) => c.id === card.id);
+//       return {
+//         ...card,
+//         amount: matchingCard ? matchingCard.amount : 0,
+//       };
+//     });
+
+//     return cardsWithAmount;
+//   } catch (error) {
+//     console.error(error);
+//     throw new Error("Error fetching cards for the deck.");
+//   }
+// }
 async function getCardsForDeck(deck_id) {
   try {
     const deckCards = await prisma.deckCard.findMany({
       where: {
         deck_id: deck_id,
       },
-    });
-
-    const cardIdsWithAmount = deckCards.map((deckCard) => ({
-      id: deckCard.card_id,
-      amount: deckCard.amount,
-    }));
-
-    const cardsForDeck = await prisma.card.findMany({
-      where: {
-        id: {
-          in: cardIdsWithAmount.map((card) => card.id),
-        },
+      select: {
+        amount: true,
+        card: true,
+        // replace with below if only want to select certain properties.
+        // for example if getting every card property via separate api call later
+        // card: {
+        //   select: {
+        //     // Select the card properties you need
+        //     id: true,
+        //     // Add other properties you need here
+        //   },
+        // },
       },
     });
 
-    const cardsWithAmount = cardsForDeck.map((card) => {
-      const matchingCard = cardIdsWithAmount.find((c) => c.id === card.id);
-      return {
-        ...card,
-        amount: matchingCard ? matchingCard.amount : 0,
-      };
-    });
-
-    return cardsWithAmount;
+    const cardsWithAmount = deckCards.map((deckCard) => ({
+      ...deckCard.card,
+      amount: deckCard.amount,
+    }));
+      //remove annoying postgres extra "json" properties
+    const mappedCards = mapCards(cardsWithAmount)
+    return mappedCards;
   } catch (error) {
     console.error(error);
     throw new Error("Error fetching cards for the deck.");
@@ -86,8 +120,6 @@ async function getCardsForDeck(deck_id) {
 }
 
 async function updateDeck(deck) {
-  console.log(deck)
-  // const deck = req.body; // Assuming you send the deck object in the request body
   const cards = deck.cards;
   const deck_id = deck.id;
   const name = deck.name;
