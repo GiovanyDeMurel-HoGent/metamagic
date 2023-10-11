@@ -1,11 +1,10 @@
 import { Card } from "metamagic-types";
 import useCardFaces from "../../hooks/useCardFaces";
+import { useContext } from "react";
+import { DeckContext } from "../decks/context/DeckContext";
 
-export default function CardImage({
-  card, displayCardDetails, setDisplayCardDetails
-}:{
-  card:Card, displayCardDetails:Card|null,setDisplayCardDetails: (card:Card|null) => void
-}) {
+export default function CardImage({card}:{card:Card}) {
+  const {displayCardDetails, setDisplayCardDetails} = useContext(DeckContext)!
   const {image_uri, isReversible, handleReverse} = useCardFaces(card)
 
   const handleSetDisplayCardDetails = () => {

@@ -1,14 +1,13 @@
 import axios from "axios";
 import { Card } from "metamagic-types";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { DeckContext } from "../features/decks/context/DeckContext";
 
 //TODO: hook up to own database to fetch suggestions instead of scryfall
-export default function useCardSearch(
-  setSelectedSearchCard: (card: Card | null) => void
-) {
+export default function useCardSearch() {
   const [suggestions, setSuggestions] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-
+  const {setSelectedSearchCard} = useContext(DeckContext)!
   const BASE_URL = "https://api.scryfall.com/cards/";
   const AUTO_COMPLETE_URL = `${BASE_URL}autocomplete?q=`;
   const EXACT_NAME_URL = `${BASE_URL}named?exact=`;

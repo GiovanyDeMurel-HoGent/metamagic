@@ -1,20 +1,19 @@
-import { Card } from "metamagic-types";
 import useCardSearch from "../../hooks/useCardSearch";
+import { useContext } from "react";
+import { DeckContext } from "../decks/context/DeckContext";
+import useCardsUpdate from "../../hooks/useCardsUpdate";
 
-interface CardSearchProps {
-  cards: Array<Card> | null;
-  selectedSearchCard: Card | null;
-  setSelectedSearchCard: (card: Card | null) => void;
-  addCard: (card: Card | null) => void;
-}
-export default function CardSearch({
-  cards,
-  selectedSearchCard,
-  setSelectedSearchCard,
-  addCard,
-}: CardSearchProps) {
-  const { suggestions, searchValue, setSearchValue, addSearchCard } =
-    useCardSearch(setSelectedSearchCard);
+export default function CardSearch() {
+  const { suggestions,
+    searchValue, 
+     setSearchValue, 
+    addSearchCard 
+    } =
+    useCardSearch();
+    const {  cards,
+      selectedSearchCard,
+      } = useContext(DeckContext)!
+      const {addCard} = useCardsUpdate()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
