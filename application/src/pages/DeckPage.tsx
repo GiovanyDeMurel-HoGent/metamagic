@@ -46,9 +46,11 @@ export default function DeckPage() {
           <CardSearch />
           {selectedSearchCard && <CardImage card={selectedSearchCard} />}
           {selectedCard && <CardImage card={selectedCard} />}
+          <div className="flex justify-between">
           <CardDetails />
           <CardsHistory />
           <CardsSort />
+          </div>
           <CardsList />
           <button onClick={handleSaveDeck}>UPDATE</button>
         </div>

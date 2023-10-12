@@ -23,7 +23,7 @@ export default function CardImage({card}:{card:Card}) {
         />
       </div>
       {isReversible && <button onClick={handleReverse}>flip</button>}
-      <button onClick={handleSetDisplayCardDetails}>details</button>
+      <button className="pr-2 pl-2 w-16 h-8 bg-green-300" onClick={handleSetDisplayCardDetails}>details</button>
     </>
   );
 }

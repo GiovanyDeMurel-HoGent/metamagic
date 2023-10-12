@@ -9,13 +9,13 @@ export default function CardsHistory() {
   console.log(undoStack)
   return (
     <>
-      <button onClick={undo} disabled={undoStack.length === 0}>
+      <button className="pl-2 pr-2  w-16 h-8 bg-orange-300" onClick={undo} disabled={undoStack.length === 0}>
         Undo
       </button>
-      <button onClick={redo} disabled={redoStack.length === 0}>
+      <button className="pl-2 pr-2 w-16 h-8 bg-orange-300" onClick={redo} disabled={redoStack.length === 0}>
         Redo
       </button>
-      <button
+      <button className="pl-2 pr-2  w-16 h-8 bg-orange-300"
         onClick={reset}
         disabled={
           cards?.length === initialCards?.length &&
