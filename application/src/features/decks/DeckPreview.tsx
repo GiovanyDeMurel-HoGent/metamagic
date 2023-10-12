@@ -9,7 +9,11 @@ export function DeckPreview(deck: Deck) {
       {deck.description && <p>Description: {deck.description}</p>}
       <p>Commander Name: {deck.commander.name}</p>
       <p>Commander Color Identity: {deck.commander.color_identity}</p>
-      <Link to={deck.id} state={deck}><button>Go to Deck</button></Link>
+      <Link to={deck.id} state={deck}>
+        <button className="rounded-md bg-blue-400 p-2 hover:bg-blue-500">
+        Go to Deck
+        </button>
+      </Link>
     </div>
   );
 }
