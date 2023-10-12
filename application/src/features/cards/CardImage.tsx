@@ -15,15 +15,15 @@ export default function CardImage({card}:{card:Card}) {
   }
   return (
     <>
-      <div style={{ width: "100%" }}>
-        <img
+      <div className="flex justify-center">
+        <img className="w-[50%]"
           src={image_uri}
           alt={card.name as string}
-          style={{ width: "200px", height: "auto" }}
+          
         />
       </div>
-      {isReversible && <button onClick={handleReverse}>flip</button>}
-      <button className="pr-2 pl-2 w-16 h-8 bg-green-300" onClick={handleSetDisplayCardDetails}>details</button>
+      {isReversible && <button className="pr-2 pl-2 mr-2 w-16 h-8 bg-green-300" onClick={handleReverse}>flip</button>}
+      <button className="pr-2 pl-2 w-16 h-8 ml-2 bg-green-300" onClick={handleSetDisplayCardDetails}>details</button>
     </>
   );
 }
